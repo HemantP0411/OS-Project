@@ -1,83 +1,49 @@
 #include<stdio.h>
-#include<conio.h>
-#include<stdlib.h>
-using namespace std;
-//variable declaration
-int arr[10],br[10],post[10],br1[10],wt[10],tarr[10],t1=3,t2=6,avgt=0,avgw=0,i,m,temp1,temp2,temp,j;
-//function to take user input of burst,arrival time of processes
-void input(int arrival[],int burst[],int burst1[])
+struct post2
 {
-	a:
-		system("cls");
-	printf("\nEnter number of processes");
-	scanf("%d",&m);
-	printf("\nEnter arival time of processes:");
-	for(i=0;i<m;i++)
-	{  printf("\nfor processes %d :",i+1);
-		scanf("%d",&arrival[i]);
-		post[i]=i+1;
-	}
-	printf("\nenter burst time for processes:");
-	for(i=0;i<m;i++)
+	int ar,bs,pid;
+};
+
+int uvt=0; //universal time
+int n,time;	//number of processes and time quantum
+int arr[10],a1=0;
+int bur[10],b1=0,bur1[10];
+int i,flag=1,flagav=0;
+int exe[10],ex1=0;
+int post[10],post2[10],p1=0,p2=0;
+int pro[10],pro1=0;
+
+
+void proz(int a[])
+{
+	int x=(sizeof(arr)/4)-1;
+	pro1=x;
+	int i=0;
+	for(i=0;i<x;i++)
 	{
-		printf("\nfor processes %d:",i+1);
-		scanf("%d",&burst[i]);
-		burst1[i]=burst[i];	
+		a[i]=a[i+1];
 	}
-	system("cls");
-	printf("Is this your final table?\n\n");
-	printf("Process\tArrival Time\tBurst Time");
-	for(i=0;i<m;i++)
-	{
-		for(j=0;j<3;j++);
-		{
-			printf("\n  P%d    \t%d       \t%d",post[i],arrival[i],burst[i]);
-		}
-	}
-	printf("\n\nIf no then press 'n' else press 'y'\n");
-	char ch;
-	scanf("%s",&ch);
-	if(ch=='n')
-	goto a;
 }
-//function for sorting according to arrival time
-void sort()
+int main()
 {
-	for(j=0;j<m;j++)
-	{
-		for(i=0;i<m-1;i++)
-		{
-			if(arr[i]>arr[i+1])
-			{
-				
-				temp2=post[i];
-				post[i]=post[i+1];
-				post[i+1]=temp2;
-				
-				temp=arr[i];
-				arr[i]=arr[i+1];
-				arr[i+1]=temp;
-				
-				temp1=br[i];
-				br[i]=br[i+1];
-				br[i+1]=temp1;
-			}
-		}
-	}	
-	system("cls");
-	printf("\nFinal table after sorting according to arrival time\n\n");
-	printf("Process\tArrival Time\tBurst Time");
-	for(i=0;i<m;i++)
-	{
-		for(j=0;j<3;j++);
-		{
-			printf("\n  P%d    \t%d       \t%d",post[i],arr[i],br[i]);
-		}
-	}
-system("pause");
+struct post2 p[10];
+printf("\n Enter number of processes (max 15): ");
+scanf("%d",&n);
+int num=n;
+printf("\n Enter the time quantum: ");
+scanf("%d",&time);
+for(i=0;i<n;i++)
+{
+post[i]=i+1;
+printf("\n Enter arrival time and burst time for P[%d]: ",post[i]);
+scanf("%d",&arr[i]);
+scanf("%d",&bur[i]);
+bur1[i]=bur[i];
 }
-main()
+for(i=0;i<n;i++)
 {
-	input(arr,br,br1);
-	sort();
+p[i].ar=arr[i];
+p[i].bs=bur[i];
+p[i].pid=post[i];	
+}
 }
