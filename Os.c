@@ -3,7 +3,7 @@
 #include<stdlib.h>
 using namespace std;
 //variable declaration
-int at[10]={0,2,4,13},bt[10]={18,23,13,10},post[10],t1=3,t2=6,i,m=4,temp1,temp2,temp,j;
+int at[10]={0,2,4,13},bt[10]={18,23,13,10},post[10],t1=3,t2=6,i,m=4,temp1,temp2,temp,temp12,temp11,j;
 
 int ct[10]={0}, rqi[50]={0}, c=0, st, flg=0, tm=0, noe=0, pnt=0, btm[10]={18,23,13,10}, tt, wt[50]={0},x;
 float att, awt;
@@ -48,7 +48,7 @@ void sort()
 {
 	for(j=0;j<m;j++)
 	{
-		for(i=0;i<m-1;i++)
+		for(i=0;i<m-j;i++)
 		{
 			if(at[i]>at[i+1])
 			{
@@ -86,10 +86,9 @@ void searchst1(int pnt,int tm){
           noe++;}
     }
 }
-
 void searchst2(int pnt, int tm)
-{
-    for(int x=pnt+1;x<n;x++)
+{  
+	for(int x=pnt+1;x<n;x++)
 	{
        int fl=0;
        for(int y=0;y<noe;y++){
@@ -100,7 +99,6 @@ void searchst2(int pnt, int tm)
           noe++;}
     }
 }
-
 void AddQue(int pnt){
     rqi[noe]=pnt+1;
     noe++;
@@ -145,7 +143,6 @@ void iteration1()
     
     
        ct[pnt]=tm;
-       printf("%d %d %d\n",st,pnt,tm);
        start[pnt]=st;
        wt[pnt]+=((start[pnt]-end[pnt]));
     end[pnt]=tm;
@@ -161,9 +158,9 @@ void waitf(int tm12,int index)
 		int in1;
 	for(in1=0;in1<m;in1++)
 	{
-		if(index!=in1)
+		if(index!=in1&&btm[in1]>0)
 		{
-			wt1[i]+=tm12;
+			wt1[in1]+=tm12;
 		}
 	}
 }
@@ -196,6 +193,52 @@ void iteration2()
 	
 	}
 }
+void sortfcfs()
+{
+for(i=0;i<m;i++)
+{
+for(j=0;j<m-1;j++)
+	{
+		if(btm[j]>btm[j+1])
+		{
+				temp2=post[j];
+				post[j]=post[j+1];
+				post[j+1]=temp2;
+				
+				temp=at[j];
+				at[j]=at[j+1];
+				at[j+1]=temp;
+				
+				temp1=bt[j];
+				bt[j]=bt[j+1];
+				bt[j+1]=temp1;
+				
+				temp12=btm[j];
+				btm[j]=btm[j+1];
+				btm[j+1]=temp12;
+				
+				temp11=wt1[j];
+				wt1[j]=wt1[j+1];
+				wt1[j+1]=temp11;	
+		}
+	}
+	}	
+}
+
+void fcfs()
+{
+	sortfcfs();
+	i=0;
+	while(i<m)
+	{
+		while(btm[i]>0)
+		{
+			waitf(1,i);
+			btm[i]-=1;
+		}
+		i++;
+	}
+}
 main()
 {
 	
@@ -204,10 +247,12 @@ main()
 
 	iteration1();
 	iteration2();
-printf("\n\nPROCESS\t AT\t BT\t CT\t TT\t WT\n");
+//	sortfcfs();
+	fcfs();
+printf("\n\nPROCESS\t AT\t BT\t CT\t TT\t WT\t BTM\n");
 for(int x=0;x<n;x++){
     tt=ct[x]-at[x];
-    printf("P%d \t %d \t %d \t %d \t %d \t %d\n",x+1,at[x],bt[x],ct[x],tt,wt1[x]);
+    printf("P%d \t %d \t %d \t %d \t %d \t %d\t %d\n",x+1,at[x],bt[x],ct[x],tt,wt1[x],btm[x]);
     awt=awt+wt[x];
     att=att+tt;
 }
